@@ -1,0 +1,35 @@
+{
+  "name": "awsome-doctor-cli",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "adc": "node ./index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DiscreteTom/awsome-doctor-cli.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DiscreteTom/awsome-doctor-cli/issues"
+  },
+  "homepage": "https://github.com/DiscreteTom/awsome-doctor-cli#readme",
+  "dependencies": {
+    "awsome-doctor-core": "github:DiscreteTom/awsome-doctor-core",
+    "axios": "^0.25.0",
+    "chalk": "^5.0.0",
+    "js-yaml": "^4.1.0",
+    "yargs": "^17.3.1"
+  },
+  "type": "module",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  }
+}
