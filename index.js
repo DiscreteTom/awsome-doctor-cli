@@ -94,10 +94,10 @@ switch (options._[0]) {
         output.err !== ""
       ) {
         console.log(chalk.red(output.err));
-      } else if (output.info) {
-        console.log(chalk.blue(output.info));
-      } else {
+      } else if (output.ok) {
         console.log(chalk.green(output.ok));
+      } else {
+        console.log(chalk.blue(output.info));
       }
       console.log("");
     }

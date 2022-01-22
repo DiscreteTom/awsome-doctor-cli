@@ -3,7 +3,7 @@
 ## Installation
 
 ```bash
-npm install -g DiscreteTom/awsome-doctor-cli
+npm install -g awsome-doctor-cli
 ```
 
 ## Quick Start
@@ -12,6 +12,7 @@ npm install -g DiscreteTom/awsome-doctor-cli
 
 ```bash
 # run workflow in official repo: https://github.com/DiscreteTom/awsome-doctor
+# with workflow parameters
 adc run EC2/ping --instanceId i-1234567890
 
 # run workflow from URL
