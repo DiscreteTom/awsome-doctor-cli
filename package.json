@@ -1,7 +1,7 @@
 {
   "name": "awsome-doctor-cli",
   "version": "0.1.0",
-  "description": "",
+  "description": "Command line interface version of Awsome Doctor.",
   "main": "index.js",
   "bin": {
     "adc": "index.js"
@@ -14,14 +14,14 @@
     "url": "git+https://github.com/DiscreteTom/awsome-doctor-cli.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "DiscreteTom <discrete_tom@outlook.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/DiscreteTom/awsome-doctor-cli/issues"
   },
   "homepage": "https://github.com/DiscreteTom/awsome-doctor-cli#readme",
   "dependencies": {
-    "awsome-doctor-core": "github:DiscreteTom/awsome-doctor-core",
+    "awsome-doctor-core": "^0.1.1",
     "axios": "^0.25.0",
     "chalk": "^5.0.0",
     "js-yaml": "^4.1.0",
