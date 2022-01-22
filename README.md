@@ -28,6 +28,8 @@ adc run -f ./workflow.yml
 
 - Markdown will not be rendered.
 
+## [CHANGELOG](https://github.com/DiscreteTom/awsome-doctor-cli/blob/main/CHANGELOG.md)
+
 ## Related Projects
 
 - [awsome-doctor](https://github.com/DiscreteTom/awsome-doctor): A browser based AWS troubleshooting tool.
