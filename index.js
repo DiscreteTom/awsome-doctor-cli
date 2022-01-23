@@ -23,10 +23,40 @@ const options = yargs(hideBin(process.argv))
         default: false,
       });
   })
+  .command("ls|list", "List all available workflows.")
   .demandCommand() // show help if no command
   .help().argv;
 
 switch (options._[0]) {
+  case "ls":
+  case "list":
+    let res = await axios.get(
+      "https://api.github.com/repos/DiscreteTom/awsome-doctor/git/trees/main?recursive=true"
+    );
+
+    let workflows = res.data.tree.filter(
+      (node) =>
+        node.path.startsWith("workflow/") &&
+        (node.path.endsWith(".yml") || node.path.endsWith(".yaml")) &&
+        node.path.split("/").length === 3
+    );
+
+    let result = {};
+    workflows.map((f) => {
+      let [_, service, name] = f.path.split("/");
+      if (!result[service]) result[service] = [];
+      result[service].push(
+        name.endsWith(".yml") ? name.slice(0, -4) : name.slice(0, -5)
+      );
+    });
+
+    console.log("Available workflows:\n");
+    for (let service in result) {
+      console.log(`${service}:`);
+      result[service].map((name) => console.log(`  ${name}`));
+      console.log("");
+    }
+    break;
   case "run":
     let txt = "";
     if (options.workflow == "<stdin>") {
