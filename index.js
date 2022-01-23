@@ -23,6 +23,7 @@ const options = yargs(hideBin(process.argv))
         default: false,
       });
   })
+  .demandCommand() // show help if no command
   .help().argv;
 
 switch (options._[0]) {
@@ -101,5 +102,7 @@ switch (options._[0]) {
       }
       console.log("");
     }
+    break;
+  default:
     break;
 }
