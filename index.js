@@ -67,7 +67,7 @@ switch (options._[0]) {
     console.log("Available workflows:\n");
     for (let service in result) {
       console.log(`${service}:`);
-      result[service].map((name) => console.log(`  ${name}`));
+      result[service].map((name) => console.log(`  ${service}/${name}`));
       console.log("");
     }
     break;
