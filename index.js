@@ -9,6 +9,7 @@ import yaml from "js-yaml";
 import chalk from "chalk";
 
 const options = yargs(hideBin(process.argv))
+  .command("ls|list", "List all available workflows.")
   .command("run [workflow]", "Run a workflow.", (yargs) => {
     return yargs
       .positional("workflow", {
@@ -23,7 +24,20 @@ const options = yargs(hideBin(process.argv))
         default: false,
       });
   })
-  .command("ls|list", "List all available workflows.")
+  .command("print [workflow]", "Print workflow as YAML text.", (yargs) => {
+    return yargs
+      .positional("workflow", {
+        describe: "YAML format workflow",
+        type: "string",
+        default: "<stdin>",
+      })
+      .option("f", {
+        alias: "file",
+        describe: "Use local workflow file.",
+        type: "boolean",
+        default: false,
+      });
+  })
   .demandCommand() // show help if no command
   .help().argv;
 
@@ -57,34 +71,12 @@ switch (options._[0]) {
       console.log("");
     }
     break;
+  case "print":
+    console.log(await getWorkflowText(options));
+    break;
   case "run":
-    let txt = "";
-    if (options.workflow == "<stdin>") {
-      console.log("Reading workflow from stdin...");
-      txt = fs.readFileSync(0, "utf-8");
-    } else if (options.file) {
-      console.log(`Reading workflow from ${options.workflow}...`);
-      txt = fs.readFileSync(options.workflow, "utf-8");
-    } else if (
-      options.workflow.startsWith("http://") ||
-      options.workflow.startsWith("https://")
-    ) {
-      console.log(`Retrieving workflow from ${options.workflow} ...`);
-      txt = (await axios.get(options.workflow)).data;
-    } else {
-      try {
-        let address = `https://raw.githubusercontent.com/DiscreteTom/awsome-doctor/main/workflow/${options.workflow}.yaml`;
-        console.log(`Trying to retrieve workflow from ${address} ...`);
-        txt = (await axios.get(address)).data;
-      } catch {
-        let address = `https://raw.githubusercontent.com/DiscreteTom/awsome-doctor/main/workflow/${options.workflow}.yml`;
-        console.log(`Trying to retrieve workflow from ${address} ...`);
-        txt = (await axios.get(address)).data;
-      }
-    }
-
     // parse workflow & params
-    let workflow = yaml.load(txt);
+    let workflow = yaml.load(await getWorkflowText(options));
     let data = workflow.data;
     workflow.input &&
       workflow.input.map((input) => {
@@ -135,4 +127,32 @@ switch (options._[0]) {
     break;
   default:
     break;
+}
+
+async function getWorkflowText(options) {
+  let txt = "";
+  if (options.workflow == "<stdin>") {
+    console.log("Reading workflow from stdin...");
+    txt = fs.readFileSync(0, "utf-8");
+  } else if (options.file) {
+    console.log(`Reading workflow from ${options.workflow}...`);
+    txt = fs.readFileSync(options.workflow, "utf-8");
+  } else if (
+    options.workflow.startsWith("http://") ||
+    options.workflow.startsWith("https://")
+  ) {
+    console.log(`Retrieving workflow from ${options.workflow} ...`);
+    txt = (await axios.get(options.workflow)).data;
+  } else {
+    try {
+      let address = `https://raw.githubusercontent.com/DiscreteTom/awsome-doctor/main/workflow/${options.workflow}.yaml`;
+      console.log(`Trying to retrieve workflow from ${address} ...`);
+      txt = (await axios.get(address)).data;
+    } catch {
+      let address = `https://raw.githubusercontent.com/DiscreteTom/awsome-doctor/main/workflow/${options.workflow}.yml`;
+      console.log(`Trying to retrieve workflow from ${address} ...`);
+      txt = (await axios.get(address)).data;
+    }
+  }
+  return txt;
 }
