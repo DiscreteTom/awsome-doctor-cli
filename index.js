@@ -10,6 +10,20 @@ import chalk from "chalk";
 
 const options = yargs(hideBin(process.argv))
   .command("ls|list", "List all available workflows.")
+  .command("show [workflow]", "Describe a workflow.", (yargs) => {
+    return yargs
+      .positional("workflow", {
+        describe: "YAML format workflow",
+        type: "string",
+        default: "<stdin>",
+      })
+      .option("f", {
+        alias: "file",
+        describe: "Use local workflow file.",
+        type: "boolean",
+        default: false,
+      });
+  })
   .command("run [workflow]", "Run a workflow.", (yargs) => {
     return yargs
       .positional("workflow", {
@@ -43,7 +57,7 @@ const options = yargs(hideBin(process.argv))
 
 switch (options._[0]) {
   case "ls":
-  case "list":
+  case "list": {
     let res = await axios.get(
       "https://api.github.com/repos/DiscreteTom/awsome-doctor/git/trees/main?recursive=true"
     );
@@ -71,10 +85,35 @@ switch (options._[0]) {
       console.log("");
     }
     break;
-  case "print":
+  }
+  case "print": {
     console.log(await getWorkflowText(options));
     break;
-  case "run":
+  }
+  case "show": {
+    // parse workflow & params
+    let workflow = yaml.load(await getWorkflowText(options));
+    console.log(`\ntitle: ${workflow.title}\n`);
+    workflow.description &&
+      console.log(`Description:\n${workflow.description}\n`);
+    if (workflow.input && workflow.input.length !== 0) {
+      console.log(`Inputs:`);
+      workflow.input.map((input) => {
+        console.log(
+          `  ${input.store}: ${input.label} ${
+            input.placeholder ? "E.g.: " + input.placeholder : ""
+          }`
+        );
+      });
+      console.log("");
+    }
+    if (workflow.steps && workflow.steps.length !== 0) {
+      console.log(`Steps:`);
+      workflow.steps.map((s, i) => console.log(`  ${i + 1}: ${s.name}`));
+    }
+    break;
+  }
+  case "run": {
     // parse workflow & params
     let workflow = yaml.load(await getWorkflowText(options));
     let data = workflow.data;
@@ -125,8 +164,10 @@ switch (options._[0]) {
       console.log("");
     }
     break;
-  default:
+  }
+  default: {
     break;
+  }
 }
 
 async function getWorkflowText(options) {
