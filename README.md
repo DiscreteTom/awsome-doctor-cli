@@ -1,5 +1,7 @@
 # awsome-doctor-cli
 
+[![npm](https://img.shields.io/npm/v/awsome-doctor-cli)](https://www.npmjs.com/package/awsome-doctor-cli)
+
 ## Installation
 
 ```bash
