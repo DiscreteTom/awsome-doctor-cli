@@ -1,8 +1,12 @@
 # CHANGELOG
 
+## v0.1.3
+
+- Apply `awsome-doctor-core@0.3.1`.
+
 ## v0.1.2
 
-- Use `awsome-doctor-core@0.3.0`
+- Use `awsome-doctor-core@0.3.0`.
 
 ## v0.1.1
 
