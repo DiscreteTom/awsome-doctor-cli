@@ -1,3 +1,5 @@
+# This project is no longer maintained.
+
 # awsome-doctor-cli
 
 [![npm](https://img.shields.io/npm/v/awsome-doctor-cli)](https://www.npmjs.com/package/awsome-doctor-cli)
@@ -48,10 +50,3 @@ adc run --help
 - Markdown will not be rendered.
 
 ## [CHANGELOG](https://github.com/DiscreteTom/awsome-doctor-cli/blob/main/CHANGELOG.md)
-
-## Related Projects
-
-- [awsome-doctor](https://github.com/DiscreteTom/awsome-doctor): A browser based AWS troubleshooting tool.
-- [awsome-doctor-cli](https://github.com/DiscreteTom/awsome-doctor-cli): Command line interface version of Awsome Doctor.
-- [awsome-doctor-view](https://github.com/DiscreteTom/awsome-doctor-view): Frontend code of Awsome Doctor.
-- [awsome-doctor-core](https://github.com/DiscreteTom/awsome-doctor-core): Workflow executor, plugins and util functions of Awsome Doctor.
